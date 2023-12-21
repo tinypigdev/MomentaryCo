@@ -15,6 +15,11 @@ final class Router: ObservableObject {
         case settings
         case children
         case books
+        case home
+        case login
+        case content
+        case updateEmail
+        case createProfile
     }
     
     @Published var navPath = NavigationPath()
@@ -22,6 +27,7 @@ final class Router: ObservableObject {
     func navigate(to destination: Destination) {
         navPath.append(destination)
     }
+    
     
     func navigateBack() {
         navPath.removeLast()

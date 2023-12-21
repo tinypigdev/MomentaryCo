@@ -11,7 +11,7 @@ struct UpdateEmailView: View {
     
     @State private var email = ""
     @State private var password = ""
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
         VStack(spacing: 24) {
@@ -22,7 +22,7 @@ struct UpdateEmailView: View {
             
             Button {
                 Task {
-                    viewModel.updateEmail(to: email)
+                    authViewModel.updateEmail()
                 }
             } label: {
                 HStack {
@@ -63,3 +63,4 @@ struct UpdateEmailView_Previews: PreviewProvider {
         UpdateEmailView()
     }
 }
+

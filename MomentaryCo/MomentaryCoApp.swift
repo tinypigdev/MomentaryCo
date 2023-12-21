@@ -20,14 +20,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct MomentaryCoApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @ObservedObject var router = Router()
-    @ObservedObject var authViewModel = AuthViewModel()
-    @ObservedObject var userViewModel = UserViewModel()
+    @StateObject var router = Router()
+    @StateObject var authViewModel = AuthViewModel()
+    @StateObject var userViewModel = UserViewModel()
+    @StateObject var locationManager = LocationManager()
     
+
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $router.navPath) {
-                
                 if  Auth.auth().currentUser != nil {
                     ContentView()
                         .navigationDestination(for: Router.Destination.self) { destination in
@@ -46,16 +47,24 @@ struct MomentaryCoApp: App {
                                 LoginView()
                             case .content:
                                 ContentView()
-                            case .
+                            case .updateEmail:
+                                UpdateEmailView()
+                            case .createProfile:
+                                CreateProfileView()
                             }
                         }
                 } else {
                     LoginView()
                 }
+                
             }
             .environmentObject(router)
             .environmentObject(authViewModel)
             .environmentObject(userViewModel)
+            .environmentObject(locationManager)
         }
+        
     }
 }
+
+

@@ -13,13 +13,14 @@ struct SettingsView: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var userViewModel: UserViewModel
+    @State private var showDeleteView = false
     
     var body: some View {
                     NavigationStack {
                         List {
                             Section {
                                 HStack {
-                                    Text(userViewModel.user.initials)
+                                    Text(userViewModel.parent.initials)
                                         .font(.title)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.white)
@@ -28,11 +29,11 @@ struct SettingsView: View {
                                         .clipShape(Circle())
                                     
                                     VStack(alignment: .leading, spacing: 4) {
-                                        Text(userViewModel.user.firstName)
+                                        Text(userViewModel.parent.firstName)
                                             .font(.subheadline)
                                             .fontWeight(.semibold)
                                             .padding(.top, 4)
-                                        Text(userViewModel.user.email)
+                                        Text(userViewModel.parent.email)
                                             .font(.footnote)
                                             .foregroundColor(.gray)
                                     }
@@ -54,7 +55,7 @@ struct SettingsView: View {
                                 HStack{
                                     SettingsRowView(imageName: "person.fill", title: "Logged in:", tintColor: Color(.black))
                                     Spacer()
-                                    Text("\(Auth.auth().currentUser ?? "")")
+                                    Text("\(Auth.auth().currentUser?.email ?? "")")
                                         .font(.subheadline)
                                         .foregroundColor(.black)
                                 }
@@ -66,15 +67,15 @@ struct SettingsView: View {
                             }
                                 
                                 
-//                                NavigationLink(destination: UpdateEmailView()) {
-//                                    Button {
-//                                        //                                print("Update Email...")
-//                                    } label: {
-//                                        SettingsRowView(imageName: "square.and.pencil.circle.fill", title: "Update Email", tintColor: .black)
-//                                    }}
+                                NavigationLink(destination: UpdateEmailView()) {
+                                    Button {
+                                        //                                print("Update Email...")
+                                    } label: {
+                                        SettingsRowView(imageName: "square.and.pencil.circle.fill", title: "Update Email", tintColor: .black)
+                                    }}
                                 
                                 Button {
-                                    authViewModel.resetPassword(withEmail: authViewModel.user.email)
+                                    authViewModel.resetPassword()
                                 } label: {
                                     SettingsRowView(imageName: "lock.circle.fill", title: "Update Password", tintColor: .black)
                                 }
@@ -86,23 +87,23 @@ struct SettingsView: View {
                                 }
                                 
                                 
-//                                Button {
-//                                    showDeleteView.toggle()
-//                                } label: {
-//                                    SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: .red)
-//                                }.sheet(isPresented: $showDeleteView, onDismiss: didDismiss) {
-//                                    DeleteAccountView()
-//
-//                                }
+                                Button {
+                                    showDeleteView.toggle()
+                                } label: {
+                                    SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: .red)
+                                }.sheet(isPresented: $showDeleteView, onDismiss: didDismiss) {
+                                    DeleteAccountView()
+
+                                }
                                 
                             }
                         }
                     }
                 
     
-//            func didDismiss() {
-//                showDeleteView = false
-//            }
+        func didDismiss() {
+                showDeleteView = false
+            }
         }
             
         

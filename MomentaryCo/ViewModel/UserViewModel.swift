@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+class UserViewModel: ObservableObject {
+   @Published var parent: Parent = Parent()
+    @Published var profileCompleted: Bool = false
+
+}

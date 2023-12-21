@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var router: Router
     
     var body: some View {
@@ -33,31 +35,8 @@ struct ContentView: View {
                 .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
-           
-        
-//            VStack {
-//                Text("You are logged in")
-//                
-//                Button("Book View") {
-//                    router.navigate(to: .settings)
-//                }
-//                
-//            }
-//            .navigationBarBackButtonHidden(true)
-//            .toolbar {
-//                ToolbarItem(placement: .topBarTrailing) {
-//                    NavigationLink {
-//                        SettingsView()
-//                    } label: {
-//                        Image(systemName: "gear")
-//                            .font(.system(size: 35))
-//                            .foregroundColor(.black)
-//                    }
-//                }
-//                
-//            }.navigationBarBackButtonHidden(true)
-//            
-        }.navigationBarBackButtonHidden(true)
+        }
+        .navigationBarBackButtonHidden(true)
     }
     
     
@@ -66,5 +45,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(AuthViewModel())
+            .environmentObject(UserViewModel())
     }
 }

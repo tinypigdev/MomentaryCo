@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DeleteAccountView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     @Environment(\.presentationMode) var presentationMode
     @State private var isAuthenticated = false
     @State private var showReauthenticationView = false
@@ -18,7 +18,7 @@ struct DeleteAccountView: View {
     var body: some View {
         
         VStack {
-            Text("You are logged in as \(viewModel.currentUser?.email ?? "Debug error: User not found.")")
+            Text("You are logged in as \(authViewModel.user?.email ?? "Debug error: User not found.")")
             isAuthenticated ? Text("You can now delete your account")
                 .fontWeight(.bold)
                 .padding()
@@ -46,8 +46,8 @@ struct DeleteAccountView: View {
                 
                 Button(action: {
                     if isAuthenticated {
-                        viewModel.deleteAccount()
-                        viewModel.signOut()
+                        authViewModel.deleteAccount()
+                        authViewModel.signOut()
                         
                     }
                     else {
@@ -75,7 +75,8 @@ struct DeleteAccountView: View {
     }
 }
 
-#Preview {
-    DeleteAccountView()
-        .environmentObject(AuthViewModel())
+struct DeleteAccountView_Previews: PreviewProvider {
+    static var previews: some View {
+        DeleteAccountView()
+    }
 }

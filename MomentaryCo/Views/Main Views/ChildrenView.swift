@@ -12,7 +12,8 @@ struct ChildrenView: View {
         var body: some View {
             VStack {
             Text("Children View 1")
-        }.navigationBarBackButtonHidden(true)
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

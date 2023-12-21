@@ -11,25 +11,24 @@ import Firebase
 struct ReauthenticateView: View {
     @Binding var isAuthenticated: Bool
     @Binding var showReauthenticationView: Bool
-    @State private var username = ""
+    @State private var email = ""
     @State private var password = ""
     @State private var errorText = ""
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     
     var body: some View {
       
             VStack {
+                TextField("Enter your email address", text: $email)
                 SecureField("Enter your password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 HStack {
                     Button("Authenticate") {
-                        viewModel.reauthenticateWithPassword(password: password) { result in
-                            handleResult(result: result)
-                        }
-                        showReauthenticationView.toggle()
-                        print("The value of isAuthenticated is: \(isAuthenticated)")
+                        showReauthenticationView = authViewModel.reauthenticateWithPassword(email: email, password: password)
+                        
+                        print("The value of showReauthenticationView is: \(showReauthenticationView)")
                         
                     }
                 }
@@ -68,6 +67,8 @@ struct ReauthenticateView: View {
         
 }
 
-#Preview {
-    ReauthenticateView(isAuthenticated: .constant(false), showReauthenticationView: .constant(false))
+struct ReauthenticateView_Previews: PreviewProvider {
+    static var previews: some View {
+        ReauthenticateView(isAuthenticated: .constant(false), showReauthenticationView: .constant(false))
+    }
 }

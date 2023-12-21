@@ -14,13 +14,20 @@ struct BookView: View {
     
     
     var body: some View {
-        VStack {
-            Text("Book View")
-            
-            Button("Profile View") {
-                router.navigate(to: .profile)
+        NavigationStack {
+            VStack {
+                Text("Book View")
+                
+                NavigationLink {
+                    ProfileView()
+                } label: {
+                    Text("Profile View")
+                }
+
+
             }
-        }.navigationBarBackButtonHidden(true)
+            .navigationBarBackButtonHidden(true)
+        }
     }
 }
 
